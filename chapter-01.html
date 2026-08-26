@@ -1,0 +1,434 @@
+<meta charset="utf-8">
+<title>Field Guide to the Command Line — Solar Grove</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --gold:#D6B25E;
+    --gold-lt:#F1D06B;
+    --gold-dk:#CFAF4D;
+    --moss:#6F8F3E;
+    --olive:#556B2F;
+    --olive-dk:#4A5D23;
+    --forest:#31572C;
+    --slate:#344E41;
+    --jade:#1C6B4C;
+    --cream:#F4EFE6;
+    --cream-lt:#FFF3D6;
+    --bark:#3C2F2F;
+    --ink:#132A13;
+  }
+
+  *{box-sizing:border-box;}
+
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    font-size:11px;
+    line-height:1.45;
+  }
+
+  .sheet{
+    max-width:8.5in;
+    margin:0 auto;
+    padding:0.5in 0.55in 0.4in;
+    background:
+      radial-gradient(circle at 92% 4%, rgba(241,208,107,.28) 0%, rgba(241,208,107,0) 34%),
+      var(--cream);
+  }
+
+  /* ---------- masthead ---------- */
+  header{
+    display:grid;
+    grid-template-columns:1fr auto;
+    align-items:end;
+    gap:16px;
+    border-bottom:1.5px solid var(--olive);
+    padding-bottom:10px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:8.5px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--olive);
+    margin:0 0 4px;
+  }
+  h1{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-weight:600;
+    font-size:34px;
+    line-height:.95;
+    margin:0;
+    color:var(--forest);
+  }
+  h1 em{
+    font-style:italic;
+    font-weight:400;
+    color:var(--olive);
+  }
+  .sub{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-style:italic;
+    font-size:13px;
+    color:var(--bark);
+    margin:5px 0 0;
+    max-width:44ch;
+  }
+  .crest{ width:74px; height:74px; flex:none; }
+
+  /* ---------- specimen grid ---------- */
+  .plate{
+    columns:2;
+    column-gap:22px;
+    margin-top:14px;
+  }
+
+  section{
+    break-inside:avoid;
+    page-break-inside:avoid;
+    margin:0 0 13px;
+  }
+
+  h2{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:9px;
+    font-weight:600;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--cream-lt);
+    background:var(--olive-dk);
+    margin:0 0 6px;
+    padding:3px 7px;
+    border-radius:2px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  h2 svg{ flex:none; opacity:.85; }
+
+  /* sections that lean on the gold register */
+  .warm h2{ background:var(--bark); }
+  .warm dt code{ border-left-color:var(--gold-dk); }
+
+  dl{ margin:0; }
+  dt{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    font-weight:500;
+    margin:0;
+  }
+  dt code{
+    display:inline-block;
+    background:rgba(255,243,214,.72);
+    border-left:2px solid var(--moss);
+    padding:1.5px 5px 1.5px 5px;
+    color:var(--ink);
+  }
+  dd{
+    margin:0 0 4.5px 0;
+    padding-left:7px;
+    color:var(--bark);
+    font-size:10px;
+  }
+  dd b{ color:var(--forest); font-weight:600; }
+
+  .arg{ color:var(--jade); font-style:italic; }
+
+  /* ---------- pull-aside ---------- */
+  .aside{
+    border:1px solid var(--gold);
+    background:linear-gradient(180deg, rgba(255,243,214,.9), rgba(244,239,230,.4));
+    border-radius:3px;
+    padding:8px 10px;
+    break-inside:avoid;
+  }
+  .aside h2{ background:var(--gold-dk); color:var(--ink); }
+  .aside dd{ color:var(--bark); }
+
+  /* ---------- footer ---------- */
+  footer{
+    margin-top:6px;
+    border-top:1px solid var(--gold);
+    padding-top:7px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:8px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--olive);
+  }
+  .vine{ flex:1; height:1px; background:repeating-linear-gradient(90deg,var(--moss) 0 3px,transparent 3px 7px); opacity:.5; }
+
+  @page{ size:letter portrait; margin:0.35in; }
+  @media print{
+    body{ background:#fff; }
+    .sheet{ padding:0; max-width:none; }
+  }
+</style>
+
+<div class="sheet">
+
+  <header>
+    <div>
+      <p class="eyebrow">Solar Grove · Field Notes № 01</p>
+      <h1>A Field Guide to<br><em>the Command Line</em></h1>
+      <p class="sub">Common specimens observed in the wild on EndeavourOS. Pin near the terminal; annotate freely.</p>
+    </div>
+    <!-- crest: seedling in orbit -->
+    <svg class="crest" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+      <circle cx="50" cy="50" r="46" stroke="#CFAF4D" stroke-width="1.2"/>
+      <circle cx="50" cy="50" r="38" stroke="#6F8F3E" stroke-width=".7" stroke-dasharray="2 4"/>
+      <circle cx="88" cy="50" r="3.2" fill="#D6B25E"/>
+      <circle cx="12" cy="50" r="2.2" fill="#6F8F3E"/>
+      <path d="M50 76V44" stroke="#31572C" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M50 52c-12 0-17-7-17-15 9 0 17 5 17 15z" fill="#6F8F3E"/>
+      <path d="M50 46c11 0 16-7 16-14-8 0-16 5-16 14z" fill="#31572C"/>
+      <path d="M50 40c0-7 4-12 9-14 1 7-3 13-9 14z" fill="#1C6B4C"/>
+      <path d="M38 78h24" stroke="#3C2F2F" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </header>
+
+  <div class="plate">
+
+    <section>
+      <h2>
+        <svg width="9" height="9" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="5" cy="5" r="1.2" fill="currentColor"/></svg>
+        Finding your footing
+      </h2>
+      <dl>
+        <dt><code>pwd</code></dt>
+        <dd>Where am I? Prints the current folder.</dd>
+        <dt><code>ls</code> · <code>ls -la</code></dt>
+        <dd>List what's here. <b>-la</b> shows hidden files and details.</dd>
+        <dt><code>cd <span class="arg">folder</span></code></dt>
+        <dd>Walk into a folder.</dd>
+        <dt><code>cd ..</code> · <code>cd ~</code> · <code>cd -</code></dt>
+        <dd>Up one level · home · back to the last place you stood.</dd>
+        <dt><code>/path</code> vs <code>path</code></dt>
+        <dd>A leading <b>/</b> starts from the root of the system. Without it, you start from where you are.</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>
+        <svg width="9" height="9" viewBox="0 0 10 10"><path d="M2 8V4l3-2 3 2v4z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+        Tending files
+      </h2>
+      <dl>
+        <dt><code>cat <span class="arg">file</span></code></dt>
+        <dd>Spill a file's contents onto the screen.</dd>
+        <dt><code>less <span class="arg">file</span></code></dt>
+        <dd>Read a long file, scrollable. Press <b>q</b> to leave.</dd>
+        <dt><code>nano <span class="arg">file</span></code></dt>
+        <dd>Edit. Save with <b>Ctrl+O</b>, Enter. Leave with <b>Ctrl+X</b>.</dd>
+        <dt><code>cp <span class="arg">a b</span></code> · <code>cp -r <span class="arg">a b</span></code></dt>
+        <dd>Copy. Add <b>-r</b> for whole folders.</dd>
+        <dt><code>mv <span class="arg">a b</span></code></dt>
+        <dd>Move — and also how you rename.</dd>
+        <dt><code>rm <span class="arg">file</span></code> · <code>rm -r <span class="arg">folder</span></code></dt>
+        <dd>Delete. No recycle bin. Read twice, run once.</dd>
+        <dt><code>mkdir -p <span class="arg">a/b</span></code></dt>
+        <dd>Make folders, parents included.</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>
+        <svg width="9" height="9" viewBox="0 0 10 10"><circle cx="5" cy="5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M5 1.4v7.2M1.4 5h7.2" stroke="currentColor" stroke-width=".8"/></svg>
+        Power &amp; session
+      </h2>
+      <dl>
+        <dt><code>systemctl suspend</code></dt>
+        <dd><b>Sleep.</b> The one you were looking for.</dd>
+        <dt><code>systemctl poweroff</code></dt>
+        <dd>Shut down. <code>shutdown now</code> also works.</dd>
+        <dt><code>systemctl reboot</code></dt>
+        <dd>Restart.</dd>
+        <dt><code>systemctl hibernate</code></dt>
+        <dd>Sleep to disk. Needs swap configured.</dd>
+        <dt><code>exit</code></dt>
+        <dd>Close this shell or leave an SSH session.</dd>
+      </dl>
+    </section>
+
+    <section class="warm">
+      <h2>
+        <svg width="9" height="9" viewBox="0 0 10 10"><path d="M5 1.5 8.5 5 5 8.5 1.5 5z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+        Pacman &amp; yay — software
+      </h2>
+      <dl>
+        <dt><code>sudo pacman -S <span class="arg">pkg</span></code></dt>
+        <dd>Install from the official repositories.</dd>
+        <dt><code>sudo pacman -Syu</code></dt>
+        <dd>Refresh lists and upgrade everything. Do it often.</dd>
+        <dt><code>sudo pacman -R <span class="arg">pkg</span></code></dt>
+        <dd>Remove. <b>-Rns</b> also clears unused dependencies.</dd>
+        <dt><code>pacman -Ss <span class="arg">term</span></code></dt>
+        <dd>Search available packages.</dd>
+        <dt><code>pacman -Qs <span class="arg">term</span></code></dt>
+        <dd>Search what's already installed.</dd>
+        <dt><code>yay -S <span class="arg">pkg</span></code></dt>
+        <dd>Same, but reaches the <b>AUR</b> — community-built packages.</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>
+        <svg width="9" height="9" viewBox="0 0 10 10"><rect x="1.6" y="1.6" width="6.8" height="6.8" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M3.4 5h3.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Services (systemd)
+      </h2>
+      <dl>
+        <dt><code>systemctl status <span class="arg">name</span></code></dt>
+        <dd>Is it running? Why did it stop?</dd>
+        <dt><code>sudo systemctl start</code> · <code>stop</code></dt>
+        <dd>Run it now · halt it now.</dd>
+        <dt><code>sudo systemctl enable --now <span class="arg">name</span></code></dt>
+        <dd>Start it <em>and</em> start it every boot from here on.</dd>
+        <dt><code>systemctl --user <span class="arg">…</span></code></dt>
+        <dd>Same commands for things that belong to you, not the system.</dd>
+        <dt><code>journalctl -xe</code></dt>
+        <dd>Recent system logs. Where errors confess.</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>
+        <svg width="9" height="9" viewBox="0 0 10 10"><path d="M1.5 7c2-3 5-3 7 0" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="5" cy="3" r="1.1" fill="currentColor"/></svg>
+        Surveying the machine
+      </h2>
+      <dl>
+        <dt><code>df -h</code></dt>
+        <dd>Free space per drive, in human numbers.</dd>
+        <dt><code>du -sh <span class="arg">folder</span></code></dt>
+        <dd>How big is this folder, really?</dd>
+        <dt><code>free -h</code></dt>
+        <dd>Memory in use.</dd>
+        <dt><code>lsblk</code></dt>
+        <dd>Every drive and partition, as a tree.</dd>
+        <dt><code>nvidia-smi</code></dt>
+        <dd>GPU status, temperature, and what's using it.</dd>
+        <dt><code>htop</code></dt>
+        <dd>Live view of what's running. <b>q</b> to quit.</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>
+        <svg width="9" height="9" viewBox="0 0 10 10"><circle cx="5" cy="5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M1.4 5h7.2M5 1.4c1.8 2.2 1.8 5 0 7.2M5 1.4C3.2 3.6 3.2 6.4 5 8.6" fill="none" stroke="currentColor" stroke-width=".7"/></svg>
+        Reaching Solar Grove
+      </h2>
+      <dl>
+        <dt><code>ping -c 3 <span class="arg">host</span></code></dt>
+        <dd>Can I reach it at all? Three tries, then stop.</dd>
+        <dt><code>ip a</code></dt>
+        <dd>This machine's network addresses.</dd>
+        <dt><code>tailscale status</code></dt>
+        <dd>Who's on the tailnet, and are they awake.</dd>
+        <dt><code>ssh <span class="arg">user@host</span></code></dt>
+        <dd>Open a shell on the server.</dd>
+        <dt><code>scp -r <span class="arg">src user@host:/path</span></code></dt>
+        <dd>Copy files over. <b>-r</b> for folders.</dd>
+      </dl>
+    </section>
+
+    <section class="warm">
+      <h2>
+        <svg width="9" height="9" viewBox="0 0 10 10"><path d="M2 5.5 4 7.5 8 2.6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Permission &amp; ownership
+      </h2>
+      <dl>
+        <dt><code>sudo <span class="arg">command</span></code></dt>
+        <dd>Run as administrator. Asks for your password; nothing appears as you type — that's normal.</dd>
+        <dt><code>chmod +x <span class="arg">file</span></code></dt>
+        <dd>Mark a file as runnable.</dd>
+        <dt><code>sudo chown <span class="arg">user:group file</span></code></dt>
+        <dd>Change who owns it.</dd>
+        <dt><code>whoami</code> · <code>groups</code></dt>
+        <dd>Who am I, and what am I allowed into.</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>
+        <svg width="9" height="9" viewBox="0 0 10 10"><circle cx="4.3" cy="4.3" r="2.6" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M6.3 6.3 8.6 8.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Searching
+      </h2>
+      <dl>
+        <dt><code>grep -n <span class="arg">"text" file</span></code></dt>
+        <dd>Find text in a file, with line numbers.</dd>
+        <dt><code>grep -ri <span class="arg">"text" folder</span></code></dt>
+        <dd>Search a whole folder, ignoring case.</dd>
+        <dt><code>find . -name <span class="arg">"*.txt"</span></code></dt>
+        <dd>Find files by name from here down.</dd>
+        <dt><code><span class="arg">command</span> | grep <span class="arg">"text"</span></code></dt>
+        <dd>The pipe <b>|</b> feeds one command's output into another.</dd>
+      </dl>
+    </section>
+
+    <section class="aside">
+      <h2>
+        <svg width="9" height="9" viewBox="0 0 10 10"><path d="M5 1.2 6.1 3.9 8.8 5 6.1 6.1 5 8.8 3.9 6.1 1.2 5 3.9 3.9z" fill="currentColor"/></svg>
+        Terminal survival
+      </h2>
+      <dl>
+        <dt><code>Ctrl+Shift+C</code> / <code>Ctrl+Shift+V</code></dt>
+        <dd><b>Copy / paste in the terminal.</b> Plain Ctrl+C means something else here.</dd>
+        <dt><code>Ctrl+C</code></dt>
+        <dd>Stop whatever is running right now.</dd>
+        <dt><code>Tab</code></dt>
+        <dd>Autocomplete. Press it constantly — it prevents typos.</dd>
+        <dt><code>↑ / ↓</code></dt>
+        <dd>Scroll back through commands you've already run.</dd>
+        <dt><code>clear</code></dt>
+        <dd>Wipe the screen clean.</dd>
+        <dt><code>man <span class="arg">command</span></code></dt>
+        <dd>The manual for anything. <b>q</b> to leave.</dd>
+        <dt><code><span class="arg">command</span> --help</code></dt>
+        <dd>The short version, when the manual is too much.</dd>
+      </dl>
+    </section>
+
+    <section class="warm">
+      <h2>
+        <svg width="9" height="9" viewBox="0 0 10 10"><rect x="1.4" y="2.2" width="7.2" height="5.6" rx=".8" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M1.4 4.4h7.2" stroke="currentColor" stroke-width=".8"/></svg>
+        Hyprland keys
+      </h2>
+      <dl>
+        <dt><code>SUPER + Q</code></dt>
+        <dd>New terminal.</dd>
+        <dt><code>SUPER + R</code></dt>
+        <dd>App launcher.</dd>
+        <dt><code>SUPER + C</code></dt>
+        <dd>Close the focused window.</dd>
+        <dt><code>SUPER + V</code></dt>
+        <dd>Float a window — makes it draggable like a normal one.</dd>
+        <dt><code>SUPER + drag</code></dt>
+        <dd>Left-drag moves · right-drag resizes.</dd>
+        <dt><code>SUPER + 1…9</code></dt>
+        <dd>Jump between workspaces.</dd>
+        <dt><code>SUPER + M</code></dt>
+        <dd>Exit Hyprland.</dd>
+        <dt><code>hyprctl reload</code></dt>
+        <dd>Apply config changes without logging out.</dd>
+      </dl>
+    </section>
+
+  </div>
+
+  <footer>
+    <span>Grown, not installed</span>
+    <span class="vine"></span>
+    <span>Solar Grove · Orbis</span>
+  </footer>
+
+</div>
