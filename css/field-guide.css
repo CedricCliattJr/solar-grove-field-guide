@@ -1,0 +1,290 @@
+/* ==========================================================================
+   Solar Grove — Field Guide to the Command Line
+   Shared stylesheet. Every colour, face, and component lives here once.
+
+   Palette and type roles come from the Solar Grove aesthetic:
+   beige ground, green and brown as accents, postal blue to keep it honest.
+   Never pure white, never pure black — both read cold against this palette.
+   ========================================================================== */
+
+:root{
+  /* --- palette ------------------------------------------------------- */
+  --ivory:       #EFE4CE;  /* page ground */
+  --ivory-deep:  #E3D3B2;  /* alternating bands, secondary surfaces */
+  --white:       #FCF8F0;  /* cards, raised surfaces — warm */
+  --tan:         #C9A97A;  /* rules, borders, decorative marks */
+  --tan-deep:    #8A6A3F;  /* small-caps labels, muted text */
+  --emerald:     #1B6B4A;  /* links, active accents */
+  --emerald-deep:#0E4530;  /* solid accent blocks, headings */
+  --ink:         #2A4E63;  /* postal blue — secondary accent, postmarks */
+  --char:        #2E2519;  /* headings */
+  --body:        #4A3A29;  /* body copy */
+
+  /* --- type roles ----------------------------------------------------- */
+  --display: 'Fraunces', Georgia, serif;          /* one display face */
+  --text:    'Karla', system-ui, sans-serif;      /* one body face */
+  --utility: 'IBM Plex Mono', ui-monospace, monospace; /* one utility face */
+}
+
+*{ box-sizing:border-box; }
+
+html{
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+
+body{
+  margin:0;
+  background:var(--ivory);
+  color:var(--body);
+  font-family:var(--text);
+  font-size:11px;
+  line-height:1.45;
+}
+
+/* Utility type is always uppercase and letter-spaced. Body type never is. */
+.eyebrow,
+h2,
+footer,
+.chapter-nav,
+.crumb{
+  font-family:var(--utility);
+  text-transform:uppercase;
+  letter-spacing:.15em;
+}
+
+/* --------------------------------------------------------------------------
+   The sheet — one printable plate, centred on the ground
+   -------------------------------------------------------------------------- */
+.sheet{
+  max-width:8.5in;
+  margin:0 auto;
+  padding:0.5in 0.55in 0.4in;
+  background:var(--ivory);
+}
+
+/* --------------------------------------------------------------------------
+   Masthead
+   -------------------------------------------------------------------------- */
+header{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:end;
+  gap:16px;
+  border-bottom:1.5px solid var(--tan);
+  padding-bottom:10px;
+}
+.eyebrow{
+  font-size:8.5px;
+  letter-spacing:.22em;
+  color:var(--tan-deep);
+  margin:0 0 4px;
+}
+h1{
+  font-family:var(--display);
+  font-weight:900;
+  font-size:34px;
+  line-height:.95;
+  margin:0;
+  color:var(--char);
+  letter-spacing:-.01em;
+}
+h1 em{
+  font-style:italic;
+  font-weight:500;
+  color:var(--emerald-deep);
+}
+.sub{
+  font-family:var(--display);
+  font-style:italic;
+  font-weight:400;
+  font-size:13px;
+  color:var(--body);
+  margin:5px 0 0;
+  max-width:46ch;
+}
+.crest{ width:74px; height:74px; flex:none; }
+
+/* --------------------------------------------------------------------------
+   Specimen plate — two columns of sections
+   -------------------------------------------------------------------------- */
+.plate{
+  columns:2;
+  column-gap:22px;
+  margin-top:14px;
+}
+
+section{
+  break-inside:avoid;
+  page-break-inside:avoid;
+  margin:0 0 13px;
+}
+
+h2{
+  font-size:9px;
+  font-weight:600;
+  letter-spacing:.16em;
+  color:var(--ivory);
+  background:var(--emerald-deep);
+  margin:0 0 6px;
+  padding:3px 7px;
+  border-radius:2px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+h2 svg{ flex:none; opacity:.85; }
+
+dl{ margin:0; }
+dt{
+  font-family:var(--utility);
+  font-size:10px;
+  font-weight:500;
+  margin:0;
+}
+dt code{
+  display:inline-block;
+  background:var(--white);
+  border-left:2px solid var(--emerald);
+  padding:1.5px 5px;
+  color:var(--char);
+}
+dd{
+  margin:0 0 4.5px 0;
+  padding-left:7px;
+  color:var(--body);
+  font-size:10px;
+}
+dd b{ color:var(--emerald-deep); font-weight:700; }
+
+.arg{ color:var(--emerald); font-style:italic; }
+
+/* numbered walkthrough */
+ol.loop{ margin:0; padding-left:16px; }
+ol.loop li{ margin-bottom:4px; color:var(--body); }
+ol.loop code{
+  font-family:var(--utility);
+  background:var(--white);
+  padding:1px 4px;
+  color:var(--char);
+}
+
+/* --------------------------------------------------------------------------
+   Section variants — the brown register, the aside, the trap
+   -------------------------------------------------------------------------- */
+
+/* .warm — sections that sit in the brown register rather than the green */
+.warm h2{ background:var(--tan-deep); }
+.warm dt code{ border-left-color:var(--tan-deep); }
+
+/* .aside — a raised card, for things worth pinning */
+.aside{
+  border:1px solid var(--tan);
+  background:var(--white);
+  border-radius:3px;
+  padding:8px 10px;
+  break-inside:avoid;
+}
+.aside h2{ background:var(--tan); color:var(--char); }
+
+/* .trap — postal blue, for mistakes already made once */
+.trap{
+  border:1px solid var(--ink);
+  background:var(--ivory-deep);
+  border-radius:3px;
+  padding:8px 10px;
+  break-inside:avoid;
+}
+.trap h2{ background:var(--ink); color:var(--white); }
+.trap dt code{ border-left-color:var(--ink); }
+
+/* --------------------------------------------------------------------------
+   Footer + the house separator
+   -------------------------------------------------------------------------- */
+footer{
+  margin-top:6px;
+  border-top:1px solid var(--tan);
+  padding-top:7px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  font-size:8px;
+  letter-spacing:.14em;
+  color:var(--tan-deep);
+}
+
+/* perforation / tear-line: the house divider, in place of a plain rule */
+.vine{
+  flex:1;
+  height:1px;
+  background:repeating-linear-gradient(90deg,var(--tan) 0 3px,transparent 3px 7px);
+  opacity:.7;
+}
+
+.pagebreak{ break-before:page; page-break-before:always; }
+
+.contsub{
+  font-family:var(--display);
+  font-style:italic;
+  font-size:15px;
+  color:var(--emerald-deep);
+  border-bottom:1px solid var(--tan);
+  padding-bottom:6px;
+  margin:0 0 12px;
+}
+
+/* --------------------------------------------------------------------------
+   Chapter navigation — screen only, never printed
+   -------------------------------------------------------------------------- */
+.chapter-nav{
+  max-width:8.5in;
+  margin:0 auto;
+  padding:14px 0.55in 34px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:8.5px;
+}
+.chapter-nav a{
+  color:var(--emerald);
+  text-decoration:none;
+  border:1px solid var(--tan);
+  border-radius:2px;
+  padding:6px 10px;
+  background:var(--white);
+}
+.chapter-nav a:hover{
+  color:var(--white);
+  background:var(--emerald-deep);
+  border-color:var(--emerald-deep);
+}
+.chapter-nav .spacer{ flex:1; }
+.chapter-nav .disabled{
+  color:var(--tan);
+  border:1px solid transparent;
+  padding:6px 10px;
+}
+
+/* --------------------------------------------------------------------------
+   Screen adaptation — the plate collapses to one column on narrow screens.
+   The print layout above is untouched.
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 8.5in){
+  body{ font-size:13px; }
+  .sheet{ padding:24px 18px; }
+  .plate{ columns:1; }
+  header{ grid-template-columns:1fr; align-items:start; }
+  .crest{ width:56px; height:56px; order:-1; }
+  h1{ font-size:clamp(26px,7vw,34px); }
+  .sub{ font-size:15px; }
+  dt, dd, ol.loop li{ font-size:12px; }
+  .chapter-nav{ padding:14px 18px 34px; flex-wrap:wrap; }
+}
+
+@page{ size:letter portrait; margin:0.35in; }
+
+@media print{
+  .sheet{ padding:0; max-width:none; }
+  .chapter-nav{ display:none; }
+}

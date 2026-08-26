@@ -1,190 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Field Guide to the Command Line № 02 — Solar Grove</title>
+<meta name="description" content="Version control, containers, and the diagnostics of a working homelab: git, Docker, storage, hardware, and the traps already sprung.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
-<style>
-  :root{
-    --gold:#D6B25E;
-    --gold-lt:#F1D06B;
-    --gold-dk:#CFAF4D;
-    --moss:#6F8F3E;
-    --olive:#556B2F;
-    --olive-dk:#4A5D23;
-    --forest:#31572C;
-    --slate:#344E41;
-    --jade:#1C6B4C;
-    --cream:#F4EFE6;
-    --cream-lt:#FFF3D6;
-    --bark:#3C2F2F;
-    --ink:#132A13;
-    --rust:#8C4A2F;
-  }
-
-  *{box-sizing:border-box;}
-  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-
-  body{
-    margin:0;
-    background:var(--cream);
-    color:var(--ink);
-    font-family:'Inter',system-ui,sans-serif;
-    font-size:11px;
-    line-height:1.45;
-  }
-
-  .sheet{
-    max-width:8.5in;
-    margin:0 auto;
-    padding:0.5in 0.55in 0.4in;
-    background:
-      radial-gradient(circle at 92% 3%, rgba(241,208,107,.26) 0%, rgba(241,208,107,0) 32%),
-      var(--cream);
-  }
-
-  /* ---------- masthead ---------- */
-  header{
-    display:grid;
-    grid-template-columns:1fr auto;
-    align-items:end;
-    gap:16px;
-    border-bottom:1.5px solid var(--olive);
-    padding-bottom:10px;
-  }
-  .eyebrow{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:8.5px;
-    letter-spacing:.22em;
-    text-transform:uppercase;
-    color:var(--olive);
-    margin:0 0 4px;
-  }
-  h1{
-    font-family:'Cormorant Garamond',Georgia,serif;
-    font-weight:600;
-    font-size:33px;
-    line-height:.95;
-    margin:0;
-    color:var(--forest);
-  }
-  h1 em{ font-style:italic; font-weight:400; color:var(--olive); }
-  .sub{
-    font-family:'Cormorant Garamond',Georgia,serif;
-    font-style:italic;
-    font-size:13px;
-    color:var(--bark);
-    margin:5px 0 0;
-    max-width:46ch;
-  }
-  .crest{ width:74px; height:74px; flex:none; }
-
-  /* ---------- plate ---------- */
-  .plate{ columns:2; column-gap:22px; margin-top:13px; }
-
-  section{
-    break-inside:avoid;
-    page-break-inside:avoid;
-    margin:0 0 13px;
-  }
-
-  h2{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:9px;
-    font-weight:600;
-    letter-spacing:.16em;
-    text-transform:uppercase;
-    color:var(--cream-lt);
-    background:var(--olive-dk);
-    margin:0 0 6px;
-    padding:3px 7px;
-    border-radius:2px;
-    display:flex;
-    align-items:center;
-    gap:6px;
-  }
-  h2 svg{ flex:none; opacity:.85; }
-  .warm h2{ background:var(--bark); }
-  .warm dt code{ border-left-color:var(--gold-dk); }
-
-  dl{ margin:0; }
-  dt{ font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:500; margin:0; }
-  dt code{
-    display:inline-block;
-    background:rgba(255,243,214,.72);
-    border-left:2px solid var(--moss);
-    padding:1.5px 5px;
-    color:var(--ink);
-  }
-  dd{ margin:0 0 4.5px 0; padding-left:7px; color:var(--bark); font-size:10px; }
-  dd b{ color:var(--forest); font-weight:600; }
-  .arg{ color:var(--jade); font-style:italic; }
-
-  /* numbered loop */
-  ol.loop{ margin:0; padding-left:16px; }
-  ol.loop li{ margin-bottom:4px; color:var(--bark); }
-  ol.loop code{
-    font-family:'IBM Plex Mono',monospace;
-    background:rgba(255,243,214,.72);
-    padding:1px 4px;
-    color:var(--ink);
-  }
-
-  /* aside */
-  .aside{
-    border:1px solid var(--gold);
-    background:linear-gradient(180deg, rgba(255,243,214,.9), rgba(244,239,230,.4));
-    border-radius:3px;
-    padding:8px 10px;
-    break-inside:avoid;
-  }
-  .aside h2{ background:var(--gold-dk); color:var(--ink); }
-
-  /* trap box */
-  .trap{
-    border:1px solid var(--rust);
-    background:rgba(140,74,47,.05);
-    border-radius:3px;
-    padding:8px 10px;
-    break-inside:avoid;
-  }
-  .trap h2{ background:var(--rust); }
-  .trap dt code{ border-left-color:var(--rust); }
-
-  footer{
-    margin-top:6px;
-    border-top:1px solid var(--gold);
-    padding-top:7px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
-    font-family:'IBM Plex Mono',monospace;
-    font-size:8px;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    color:var(--olive);
-  }
-  .vine{ flex:1; height:1px; background:repeating-linear-gradient(90deg,var(--moss) 0 3px,transparent 3px 7px); opacity:.5; }
-
-  .pagebreak{ break-before:page; page-break-before:always; }
-
-  .contsub{
-    font-family:'Cormorant Garamond',Georgia,serif;
-    font-style:italic;
-    font-size:15px;
-    color:var(--olive);
-    border-bottom:1px solid var(--gold);
-    padding-bottom:6px;
-    margin:0 0 12px;
-  }
-
-  @page{ size:letter portrait; margin:0.35in; }
-  @media print{
-    body{ background:#fff; }
-    .sheet{ padding:0; max-width:none; }
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Karla:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/field-guide.css">
+</head>
+<body>
 
 <div class="sheet">
 
@@ -196,16 +22,16 @@
     </div>
     <!-- crest: branching tree / version graph -->
     <svg class="crest" viewBox="0 0 100 100" fill="none" aria-hidden="true">
-      <circle cx="50" cy="50" r="46" stroke="#CFAF4D" stroke-width="1.2"/>
-      <path d="M50 84V30" stroke="#31572C" stroke-width="2.2" stroke-linecap="round"/>
-      <path d="M50 62c-10-4-16-12-16-22" stroke="#6F8F3E" stroke-width="1.6" stroke-linecap="round"/>
-      <path d="M50 48c10-4 15-11 15-20" stroke="#6F8F3E" stroke-width="1.6" stroke-linecap="round"/>
-      <circle cx="50" cy="30" r="4.5" fill="#D6B25E"/>
-      <circle cx="34" cy="40" r="3.4" fill="#31572C"/>
-      <circle cx="65" cy="28" r="3.4" fill="#1C6B4C"/>
-      <path d="M42 40c-6 1-9 5-9 10 6 0 9-4 9-10z" fill="#6F8F3E"/>
-      <path d="M58 52c6 1 10 5 10 10-6 0-10-4-10-10z" fill="#4A5D23"/>
-      <path d="M38 86h24" stroke="#3C2F2F" stroke-width="1.6" stroke-linecap="round"/>
+      <circle cx="50" cy="50" r="46" stroke="var(--tan)" stroke-width="1.2"/>
+      <path d="M50 84V30" stroke="var(--emerald-deep)" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M50 62c-10-4-16-12-16-22" stroke="var(--emerald)" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M50 48c10-4 15-11 15-20" stroke="var(--emerald)" stroke-width="1.6" stroke-linecap="round"/>
+      <circle cx="50" cy="30" r="4.5" fill="var(--tan)"/>
+      <circle cx="34" cy="40" r="3.4" fill="var(--emerald-deep)"/>
+      <circle cx="65" cy="28" r="3.4" fill="var(--emerald)"/>
+      <path d="M42 40c-6 1-9 5-9 10 6 0 9-4 9-10z" fill="var(--emerald)"/>
+      <path d="M58 52c6 1 10 5 10 10-6 0-10-4-10-10z" fill="var(--emerald-deep)"/>
+      <path d="M38 86h24" stroke="var(--body)" stroke-width="1.6" stroke-linecap="round"/>
     </svg>
   </header>
 
@@ -213,7 +39,7 @@
 
     <section class="warm">
       <h2>
-        <svg width="9" height="9" viewBox="0 0 10 10"><path d="M5 1.5v7M5 5 2 8M5 5l3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1.5v7M5 5 2 8M5 5l3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         Git — the daily loop
       </h2>
       <ol class="loop">
@@ -228,7 +54,7 @@
 
     <section class="warm">
       <h2>
-        <svg width="9" height="9" viewBox="0 0 10 10"><circle cx="3" cy="3" r="1.6" fill="currentColor"/><circle cx="7" cy="7" r="1.6" fill="currentColor"/><path d="M3 4.6v.8M4.6 3h.8" stroke="currentColor" stroke-width="1"/></svg>
+        <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true"><circle cx="3" cy="3" r="1.6" fill="currentColor"/><circle cx="7" cy="7" r="1.6" fill="currentColor"/><path d="M3 4.6v.8M4.6 3h.8" stroke="currentColor" stroke-width="1"/></svg>
         Git — setup &amp; history
       </h2>
       <dl>
@@ -257,7 +83,7 @@
 
     <section class="warm">
       <h2>
-        <svg width="9" height="9" viewBox="0 0 10 10"><path d="M1.5 4h7v4.2h-7z" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M3 4V2.2h4V4" fill="none" stroke="currentColor" stroke-width="1.1"/></svg>
+        <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true"><path d="M1.5 4h7v4.2h-7z" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M3 4V2.2h4V4" fill="none" stroke="currentColor" stroke-width="1.1"/></svg>
         Two remotes, one repo
       </h2>
       <dl>
@@ -272,7 +98,7 @@
 
     <section>
       <h2>
-        <svg width="9" height="9" viewBox="0 0 10 10"><rect x="1.4" y="3.4" width="7.2" height="4.4" rx=".6" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M2.8 3.4V2.2h1.6v1.2M5.6 3.4V2.2h1.6v1.2" stroke="currentColor" stroke-width="1"/></svg>
+        <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true"><rect x="1.4" y="3.4" width="7.2" height="4.4" rx=".6" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M2.8 3.4V2.2h1.6v1.2M5.6 3.4V2.2h1.6v1.2" stroke="currentColor" stroke-width="1"/></svg>
         Docker — reading a live stack
       </h2>
       <dl>
@@ -297,7 +123,7 @@
 
     <section>
       <h2>
-        <svg width="9" height="9" viewBox="0 0 10 10"><ellipse cx="5" cy="2.8" rx="3.4" ry="1.3" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M1.6 2.8v4.4c0 .7 1.5 1.3 3.4 1.3s3.4-.6 3.4-1.3V2.8" fill="none" stroke="currentColor" stroke-width="1.1"/></svg>
+        <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true"><ellipse cx="5" cy="2.8" rx="3.4" ry="1.3" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M1.6 2.8v4.4c0 .7 1.5 1.3 3.4 1.3s3.4-.6 3.4-1.3V2.8" fill="none" stroke="currentColor" stroke-width="1.1"/></svg>
         Storage &amp; filesystems
       </h2>
       <dl>
@@ -322,7 +148,7 @@
 
     <section>
       <h2>
-        <svg width="9" height="9" viewBox="0 0 10 10"><path d="M5 1.3 8.7 8.4H1.3z" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/><path d="M5 4v2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="5" cy="7" r=".6" fill="currentColor"/></svg>
+        <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1.3 8.7 8.4H1.3z" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/><path d="M5 4v2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="5" cy="7" r=".6" fill="currentColor"/></svg>
         When something breaks
       </h2>
       <dl>
@@ -357,7 +183,7 @@
 
     <section>
       <h2>
-        <svg width="9" height="9" viewBox="0 0 10 10"><path d="M2 2.4 5 5 2 7.6M5.6 7.6h2.6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 2.4 5 5 2 7.6M5.6 7.6h2.6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Writing &amp; reading files
       </h2>
       <dl>
@@ -384,7 +210,7 @@
 
     <section>
       <h2>
-        <svg width="9" height="9" viewBox="0 0 10 10"><rect x="1.5" y="1.5" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M3.4 5h3.2M5 3.4v3.2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="1.5" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M3.4 5h3.2M5 3.4v3.2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         Hardware inventory
       </h2>
       <dl>
@@ -405,7 +231,7 @@
 
     <section>
       <h2>
-        <svg width="9" height="9" viewBox="0 0 10 10"><path d="M2 4v2h1.6L6 8V2L3.6 4z" fill="currentColor"/><path d="M7.2 3.6c.7.8.7 2 0 2.8" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+        <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 4v2h1.6L6 8V2L3.6 4z" fill="currentColor"/><path d="M7.2 3.6c.7.8.7 2 0 2.8" fill="none" stroke="currentColor" stroke-width="1"/></svg>
         Sound
       </h2>
       <dl>
@@ -422,7 +248,7 @@
 
     <section>
       <h2>
-        <svg width="9" height="9" viewBox="0 0 10 10"><rect x="1.4" y="2.2" width="7.2" height="5.6" rx=".8" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M1.4 4.2h7.2" stroke="currentColor" stroke-width=".9"/></svg>
+        <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true"><rect x="1.4" y="2.2" width="7.2" height="5.6" rx=".8" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M1.4 4.2h7.2" stroke="currentColor" stroke-width=".9"/></svg>
         Hyprland &amp; desktop
       </h2>
       <dl>
@@ -445,7 +271,7 @@
 
     <section class="trap">
       <h2>
-        <svg width="9" height="9" viewBox="0 0 10 10"><path d="M5 1.3 8.7 8.4H1.3z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M5 3.8v2.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1.3 8.7 8.4H1.3z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M5 3.8v2.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         Traps already sprung
       </h2>
       <dl>
@@ -470,7 +296,7 @@
 
     <section class="aside">
       <h2>
-        <svg width="9" height="9" viewBox="0 0 10 10"><circle cx="5" cy="5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M5 3v2.2l1.4 1" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true"><circle cx="5" cy="5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M5 3v2.2l1.4 1" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         The grove check
       </h2>
       <dd style="margin-bottom:6px">Thirty seconds, whenever you sit down. Tells you where you stand before you start guessing.</dd>
@@ -484,7 +310,7 @@
 
     <section>
       <h2>
-        <svg width="9" height="9" viewBox="0 0 10 10"><circle cx="5" cy="5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M1.4 5h7.2M5 1.4c1.8 2.2 1.8 5 0 7.2M5 1.4C3.2 3.6 3.2 6.4 5 8.6" fill="none" stroke="currentColor" stroke-width=".7"/></svg>
+        <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true"><circle cx="5" cy="5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M1.4 5h7.2M5 1.4c1.8 2.2 1.8 5 0 7.2M5 1.4C3.2 3.6 3.2 6.4 5 8.6" fill="none" stroke="currentColor" stroke-width=".7"/></svg>
         Reaching out
       </h2>
       <dl>
@@ -512,3 +338,13 @@
   </footer>
 
 </div>
+
+<nav class="chapter-nav">
+  <a href="chapter-01.html">← № 01 · The Command Line</a>
+  <span class="spacer"></span>
+  <a href="index.html">All sheets</a>
+  <span class="disabled">No later sheet yet →</span>
+</nav>
+
+</body>
+</html>
