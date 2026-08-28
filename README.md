@@ -4,7 +4,7 @@ Printable field notes for working at a Linux terminal, in the shape of an old
 botanical field guide. Each sheet is one page you can print, pin near the
 machine, and write on.
 
-**Read them here: https://GroveKeeper.github.io/solar-grove-field-guide/**
+**Read them here: https://cedriccliattjr.github.io/solar-grove-field-guide/**
 
 ## The sheets
 
