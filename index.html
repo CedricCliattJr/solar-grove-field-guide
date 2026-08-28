@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Field Guide to the Command Line — Solar Grove</title>
+<meta name="description" content="Printable field notes for the Linux command line. Plain-language sheets covering navigation, files, packages, git, Docker, and homelab diagnostics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Karla:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/field-guide.css">
+<link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+<div class="sheet">
+
+  <header>
+    <div>
+      <p class="eyebrow">Solar Grove · Field Notes</p>
+      <h1>A Field Guide to<br><em>the Command Line</em></h1>
+      <p class="sub">Printable sheets for the terminal, written in plain language. Pin them near the machine; annotate freely.</p>
+    </div>
+    <!-- crest: seedling in orbit -->
+    <svg class="crest" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+      <circle cx="50" cy="50" r="46" stroke="var(--tan)" stroke-width="1.2"/>
+      <circle cx="50" cy="50" r="38" stroke="var(--emerald)" stroke-width=".7" stroke-dasharray="2 4"/>
+      <circle cx="88" cy="50" r="3.2" fill="var(--tan)"/>
+      <circle cx="12" cy="50" r="2.2" fill="var(--emerald)"/>
+      <path d="M50 76V44" stroke="var(--emerald-deep)" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M50 52c-12 0-17-7-17-15 9 0 17 5 17 15z" fill="var(--emerald)"/>
+      <path d="M50 46c11 0 16-7 16-14-8 0-16 5-16 14z" fill="var(--emerald-deep)"/>
+      <path d="M50 40c0-7 4-12 9-14 1 7-3 13-9 14z" fill="var(--emerald)"/>
+      <path d="M38 78h24" stroke="var(--body)" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </header>
+
+  <p class="intro">
+    Two sheets so far. The first is what you need to move around a Linux
+    machine at all; the second is what you need once you're running things on
+    it. Every command is one you'll actually type, described in the words you'd
+    use to explain it to someone standing next to you.
+  </p>
+
+  <ol class="sheets">
+
+    <li class="sheet-card">
+      <p class="eyebrow">№ 01</p>
+      <h2 class="card-title"><a href="chapter-01.html">A Field Guide to the Command Line</a></h2>
+      <p class="card-sub">Getting your footing. One page.</p>
+      <p class="card-body">
+        Where you are and how to move. Reading, copying, and deleting files.
+        Installing software with pacman and yay. Services, disk space, the
+        network, permissions, and the handful of terminal keys that stop you
+        getting stuck.
+      </p>
+      <p class="topics">
+        <span>Navigation</span><span>Files</span><span>Pacman &amp; yay</span><span>systemd</span><span>Permissions</span><span>Hyprland</span>
+      </p>
+    </li>
+
+    <li class="sheet-card">
+      <p class="eyebrow">№ 02</p>
+      <h2 class="card-title"><a href="chapter-02.html">The Command Line, Second Season</a></h2>
+      <p class="card-sub">Running a homelab. Two pages.</p>
+      <p class="card-body">
+        Version control, containers, and diagnostics. The five-command git loop
+        you'll use forever, reading a live Docker stack, drives and fstab, and a
+        page of traps that have already been sprung once so you don't have to
+        spring them again.
+      </p>
+      <p class="topics">
+        <span>Git</span><span>Docker</span><span>Storage</span><span>Hardware</span><span>Logs</span><span>Traps</span>
+      </p>
+    </li>
+
+  </ol>
+
+  <p class="more">More sheets as the grove grows.</p>
+
+  <footer>
+    <span>Grown, not installed</span>
+    <span class="vine"></span>
+    <span>Solar Grove · Orbis</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

@@ -159,6 +159,14 @@ dd b{ color:var(--emerald-deep); font-weight:700; }
 
 .arg{ color:var(--emerald); font-style:italic; }
 
+/* a loose line of prose inside a section, outside any list */
+.note{
+  margin:0 0 6px;
+  color:var(--body);
+  font-size:10px;
+}
+.note.after{ margin:5px 0 0; }
+
 /* numbered walkthrough */
 ol.loop{ margin:0; padding-left:16px; }
 ol.loop li{ margin-bottom:4px; color:var(--body); }
@@ -278,7 +286,7 @@ footer{
   .crest{ width:56px; height:56px; order:-1; }
   h1{ font-size:clamp(26px,7vw,34px); }
   .sub{ font-size:15px; }
-  dt, dd, ol.loop li{ font-size:12px; }
+  dt, dd, ol.loop li, .note{ font-size:12px; }
   .chapter-nav{ padding:14px 18px 34px; flex-wrap:wrap; }
 }
 

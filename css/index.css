@@ -1,0 +1,110 @@
+/* ==========================================================================
+   Index page only. Tokens and type roles come from field-guide.css —
+   nothing here defines a colour of its own.
+   ========================================================================== */
+
+.intro{
+  font-family:var(--display);
+  font-size:15px;
+  line-height:1.5;
+  color:var(--body);
+  max-width:58ch;
+  margin:22px 0 4px;
+}
+
+/* --- the list of sheets --------------------------------------------------- */
+.sheets{
+  list-style:none;
+  margin:22px 0 0;
+  padding:0;
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:18px;
+}
+
+.sheet-card{
+  background:var(--white);
+  border:1px solid var(--tan);
+  border-radius:3px;
+  padding:16px 18px 18px;
+}
+
+.sheet-card .eyebrow{
+  color:var(--tan-deep);
+  font-size:9px;
+  margin:0 0 6px;
+}
+
+.card-title{
+  /* the index overrides the plate's banded h2 — here it's a real heading */
+  font-family:var(--display);
+  font-weight:600;
+  font-size:19px;
+  line-height:1.15;
+  letter-spacing:normal;
+  text-transform:none;
+  color:var(--char);
+  background:none;
+  display:block;
+  margin:0 0 4px;
+  padding:0;
+  border-radius:0;
+}
+.card-title a{
+  color:var(--emerald-deep);
+  text-decoration:none;
+  border-bottom:1px solid var(--tan);
+}
+.card-title a:hover{
+  color:var(--emerald);
+  border-bottom-color:var(--emerald);
+}
+
+.card-sub{
+  font-family:var(--display);
+  font-style:italic;
+  font-size:13px;
+  color:var(--tan-deep);
+  margin:0 0 9px;
+}
+
+.card-body{
+  font-size:11.5px;
+  line-height:1.55;
+  color:var(--body);
+  margin:0 0 12px;
+}
+
+/* --- topic chips ---------------------------------------------------------- */
+.topics{
+  margin:0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+}
+.topics span{
+  font-family:var(--utility);
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-size:7.5px;
+  color:var(--tan-deep);
+  border:1px solid var(--tan);
+  border-radius:2px;
+  padding:3px 6px;
+}
+
+.more{
+  font-family:var(--utility);
+  text-transform:uppercase;
+  letter-spacing:.15em;
+  font-size:8px;
+  color:var(--tan-deep);
+  margin:20px 0 0;
+}
+
+@media screen and (max-width: 8.5in){
+  .sheets{ grid-template-columns:1fr; }
+  .intro{ font-size:16px; }
+  .card-body{ font-size:13px; }
+  .topics span{ font-size:9px; }
+}
